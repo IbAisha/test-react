@@ -1,8 +1,14 @@
-function Home(props) {
+import React from "react";
 
-    return <i>HOME</i>;
-    
-}
+const About = () => {
+    return (
+        <div>
+            <h1>
+                GeeksforGeeks is a Computer Science portal
+                for geeks.
+            </h1>
+        </div>
+    );
+};
 
-
-export default Home;
+export default About;
