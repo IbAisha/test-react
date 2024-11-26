@@ -1,28 +1,35 @@
-// Filename - App.js
 
-import React from "react";
-import Navbar from './components/Navbar'
-import { BrowserRouter as Router, 
-        Routes,
-        Route} from "react-router-dom"
+// import React, {useState} from 'react';
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+    {
+        path:'/',
+        element: 
+        <div>
+            <Outlet/>
+                
+        </div> ,
+        children: [
+            {
+            path:'blogs',
+            element: <div>Blog</div> 
+        }
+         ,
+        {
+            path:'about',
+            element: <div>about</div>
+         }, ] 
+    }
+
+])
+
+
 
 function App() {
-    return (
-        <Router>
-        <Navbar />
-        <Routes>
-            
-            <Route 
-                path="/about" 
-                element={<About />} />
-            
-            <Route 
-                path="/blogs" 
-                element={<Blogs />} />
-            
-        </Routes>
-    </Router>
-    )
+    return <RouterProvider router={router}/>
+    
 }
 
 export default App;
+
