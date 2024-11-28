@@ -1,17 +1,19 @@
 
 // import React, {useState} from 'react';
-import { createBrowserRouter, Outlet, NavLink ,RouterProvider, useRouteError } from "react-router-dom";
+import { createBrowserRouter, Outlet, NavLink ,RouterProvider, useRouteError, defer } from "react-router-dom";
 import { Single } from "./pages/Single";
 import { About } from "./pages/about";
 import { Blog } from "./pages/blog";
+import { useNavigation } from "react-router-dom";
+import { Spinner } from "./components/Spinner";
 
 
 const router = createBrowserRouter([
     {
         path:'/',
         element: <Root/>,
-        errorElement: <PageError/>,
-        children: [
+        // errorElement: <PageError/>,
+        children: [ 
         {
                 path:'blog',
                 element: <div className="row">
@@ -26,7 +28,11 @@ const router = createBrowserRouter([
                 {
                     path: '',
                     element: <Blog />,
-                    loader: () => fetch('https://jsonplaceholder.typicode.com/posts?_limit=10')
+                    loader: () => {
+                        const posts =
+                        fetch('https://jsonplaceholder.typicode.com/posts?_limit=10').then(r => r.json())
+                        return defer({posts})
+                    } 
                 },
                 {
                     path: ':id',
@@ -45,22 +51,24 @@ const router = createBrowserRouter([
 
 ]);
 
-function PageError() {
+// function PageError() {
 
-    const error = useRouteError();
-    console.log(error);
+//     const error = useRouteError();
+//     console.log(error);
 
-    return <>
+//     return <>
 
    
-     <h1>Une erreur est survenue</h1>
-     <p>
-     {error?.error.toString() ?? error?.toString()} 
-     </p>
-     </>
-}
+//      <h1>Une erreur est survenue</h1>
+//      <p>
+//      {error?.error.toString() ?? error?.toString()} 
+//      </p>
+//      </>
+// }
 
 function Root() {
+
+    const {state} = useNavigation();
     return <>
     <header>
         <nav>
@@ -72,6 +80,7 @@ function Root() {
     </header>
 
     <div className="container my-4">
+        {state === 'loading' && <Spinner/>}
         <Outlet/>
     </div>
     </>

@@ -1,19 +1,29 @@
-import { useLoaderData, NavLink} from "react-router-dom"
-
+import { useLoaderData, NavLink, Await} from "react-router-dom"
+import { Spinner } from "../components/Spinner";
+import {Suspense} from "react"
+;
 export function Blog () {
 
-    const posts = useLoaderData()
+    const {posts} = useLoaderData()
+    console.log({posts});
     return (
     <>
     <h1>Mon blog</h1>
 
-    <ul>
+    <Suspense fallback={<Spinner/>}>
+        <Await resolve={posts}>
+            {(posts => { <ul>
         {posts.map((post) => (
             <li key={post.id}>
                 <NavLink to={post.id}>{post.title}</NavLink>
             </li>
         ))}
     </ul>
+     })}
+        </Await>
+
+        </Suspense>
+
     
     </>
     );
