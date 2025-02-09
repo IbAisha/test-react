@@ -6,7 +6,6 @@ import { About } from "./pages/about";
 import { Blog } from "./pages/blog";
 import { useNavigation } from "react-router-dom";
 import { Spinner } from "./components/Spinner";
-import { BurgerMenu } from "./components/BurgerMenu";
 
 
 const router = createBrowserRouter([
@@ -52,20 +51,20 @@ const router = createBrowserRouter([
 
 ]);
 
-function PageError() {
+// function PageError() {
 
-    const error = useRouteError();
-    console.log(error);
+//     const error = useRouteError();
+//     console.log(error);
 
-    return <>
+//     return <>
 
    
-     <h1>Une erreur est survenue</h1>
-     <p>
-     {error?.error.toString() ?? error?.toString()} 
-     </p>
-     </>
-}
+//      <h1>Une erreur est survenue</h1>
+//      <p>
+//      {error?.error.toString() ?? error?.toString()} 
+//      </p>
+//      </>
+// }
 
 function Root() {
 
@@ -76,7 +75,6 @@ function Root() {
             <NavLink to='/'>Home</NavLink><br/>
             <NavLink to='/blog'>Blog</NavLink><br/>
             <NavLink to='/about'>About me</NavLink><br/>
-            <BurgerMenu/>
             
         </nav>
     </header>
